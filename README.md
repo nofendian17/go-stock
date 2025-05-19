@@ -47,7 +47,7 @@ go run main.go
 ```
 
 ## API Endpoints
-Base URL: `http://localhost:3000/api/v1`
+Base URL: `http://localhost:3000/`
 
 ### Stocks
 - **`GET /api/v1/stocks`**  
