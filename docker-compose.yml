@@ -1,0 +1,38 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    depends_on:
+      - mongo
+    networks:
+      - app_network
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  mongo:
+    image: mongo:8
+    container_name: mongo
+    ports:
+      - "27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app_network
+    restart: on-failure
+
+volumes:
+  mongo_data:
+
+networks:
+  app_network:

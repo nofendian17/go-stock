@@ -1,0 +1,33 @@
+application:
+  name: "Stock"
+  version: 1.0.0
+  timezone: "Asia/Jakarta"
+  host: "0.0.0.0"
+  port: 3000
+
+mongo:
+  dsn: "mongodb://mongo:27017"
+  database: "sahamID"
+
+service:
+  idx_service:
+    base_url: "https://idx.co.id"
+    delay: 1000 #milisecond
+    path:
+      stock_list: "/primary/StockData/GetSecuritiesStock?start=0&length=9999&code=&sector=&board=&language=id-id"
+      stock_summary_list: "/primary/TradingSummary/GetStockSummary?length=9999&start=0&date={DATE}"
+      broker_list: "/primary/ExchangeMember/GetBrokerSearch?option=0&license=&start=0&length=9999&language=id-id"
+      company_profile: "/primary/ListedCompany/GetCompanyProfilesDetail?KodeEmiten={CODE}"
+      financial_report: "/primary/ListedCompany/GetFinancialReport?periode={PERIOD}&year={YEAR}&indexFrom=0&pageSize=1000&reportType=rdf"
+
+  indo_premier_service:
+    base_url: "https://www.indopremier.com"
+    delay: 1 #milisecond
+    path:
+      broker_summary: "/module/saham/include/data-brokersummary.php?code={CODE}&start={START_DATE}&end={END_DATE}&fd={INVESTOR_TYPE}&board={BOARD}"
+
+cron_job:
+  update_stock_list: "0 0 * * 0" # every week (Sunday at 00:00)
+  update_stock_summary_list: "0 18 * * 1-5" # every weekday (Monday to Friday at 18:00)
+  update_broker_list: "0 15 * * 0" # every week (Sunday at 15:00)
+  update_financial_report: "0 1 * * *" # every day at 01:00
