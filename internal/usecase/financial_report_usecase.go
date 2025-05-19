@@ -7,7 +7,6 @@ import (
 	"go-stock/internal/entity"
 	"go-stock/internal/infrastructure/idx"
 	"go-stock/internal/repository"
-	"net/url"
 )
 
 type FinancialReportUseCase interface {
@@ -45,7 +44,7 @@ func (b *financialReportUseCase) UpdateFinancialReport(ctx context.Context, peri
 				FileID:       attachment.FileID,
 				FileModified: attachment.FileModified,
 				FileName:     attachment.FileName,
-				FilePath:     fmt.Sprintf("%s%s", b.cfg.GetService().IDXService.BaseURL, url.PathEscape(attachment.FilePath)),
+				FilePath:     fmt.Sprintf("%s%s", b.cfg.GetService().IDXService.BaseURL, attachment.FilePath),
 				FileSize:     attachment.FileSize,
 				FileType:     attachment.FileType,
 				ReportPeriod: attachment.ReportPeriod,
