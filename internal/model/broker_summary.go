@@ -6,7 +6,7 @@ type BrokerSummaryRequest struct {
 	StockCode       string `json:"stock_code" validate:"required"`
 	StartDate       string `json:"start_date" validate:"required,datetime=2006-01-02"`
 	EndDate         string `json:"end_date" validate:"required,datetime=2006-01-02"`
-	InvestorType    string `json:"investor_type" validate:"required,oneof=ALL F F"`
+	InvestorType    string `json:"investor_type" validate:"required,oneof=ALL F D"`
 	TransactionType string `json:"transaction_type" validate:"required,oneof=ALL RG TN NG"`
 }
 

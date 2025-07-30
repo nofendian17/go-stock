@@ -26,6 +26,14 @@ func NewStockHandler(stockUseCase usecase.StockUseCase, validate *validator.Vali
 	}
 }
 
+// ListStock list all stocks
+// @Summary List all stocks
+// @Description List all stocks
+// @Tags Stock
+// @Produce json
+// @Success 200 {array} model.StockResponse
+// @Failure 500 {object} response.Error
+// @Router /api/v1/stocks [get]
 func (s *stockHandler) ListStock(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	lists, err := s.stockUsecase.ListStocks(r.Context())
@@ -164,6 +172,17 @@ func (s *stockHandler) ListStock(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// FindStock find stock by stock code
+// @Summary Find stock by stock code
+// @Description Find stock by stock code
+// @Tags Stock
+// @Produce json
+// @Param request query model.StockRequest true "query params"
+// @Success 200 {object} model.StockResponse
+// @Failure 400 {object} response.Error
+// @Failure 404 {object} response.Error
+// @Failure 500 {object} response.Error
+// @Router /api/v1/stock [get]
 func (s *stockHandler) FindStock(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	stockCode := r.URL.Query().Get("stock_code")

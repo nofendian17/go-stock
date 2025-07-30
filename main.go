@@ -12,6 +12,16 @@ import (
 	"syscall"
 )
 
+// @title Go Stock API
+// @version 1.0
+// @description This is a simple API for stock data
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email soberkoder@swagger.io
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8080
+// @BasePath /
 func main() {
 	// Load the configuration
 	cfg, err := config.NewConfig("config.yaml")

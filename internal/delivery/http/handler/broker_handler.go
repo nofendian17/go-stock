@@ -26,6 +26,16 @@ func NewBrokerHandler(brokerUsecase usecase.BrokerUseCase, validate *validator.V
 	}
 }
 
+// Find brokers
+// @Summary Find brokers
+// @Description Find brokers by code
+// @Tags Broker
+// @Produce json
+// @Param request query model.BrokerRequest true "query params"
+// @Success 200 {array} model.BrokerResponse
+// @Failure 400 {object} response.Error
+// @Failure 500 {object} response.Error
+// @Router /api/v1/brokers [get]
 func (h *brokerHandler) Find(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	code := r.URL.Query().Get("code")
