@@ -4,6 +4,7 @@ import (
 	"go-stock/internal/app"
 	"net/http"
 
+	_ "go-stock/docs"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
