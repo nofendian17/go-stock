@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   model.Attachment:
     properties:
@@ -348,15 +349,24 @@ definitions:
       message:
         type: string
     type: object
+host: localhost:8080
 info:
-  contact: {}
+  contact:
+    email: soberkoder@swagger.io
+    name: API Support
+  description: This is a simple API for stock data
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go Stock API
+  version: "1.0"
 paths:
   /api/v1/brokers:
     get:
       description: Find brokers by code
       parameters:
-      - description: Broker code
-        in: query
+      - in: query
         name: code
         type: string
       produces:
@@ -384,28 +394,34 @@ paths:
       description: Find broker summaries by stock code, start date, end date, investor
         type, and transaction type
       parameters:
-      - description: Stock code
-        in: query
-        name: stock_code
-        required: true
-        type: string
-      - description: Start date (yyyy-mm-dd)
-        in: query
-        name: start_date
-        required: true
-        type: string
-      - description: End date (yyyy-mm-dd)
-        in: query
+      - in: query
         name: end_date
         required: true
         type: string
-      - description: Investor type (all, domestic, foreign)
+      - enum:
+        - ALL
+        - F
+        - F
         in: query
         name: investor_type
+        required: true
         type: string
-      - description: Transaction type (all, net, buy, sell)
+      - in: query
+        name: start_date
+        required: true
+        type: string
+      - in: query
+        name: stock_code
+        required: true
+        type: string
+      - enum:
+        - ALL
+        - RG
+        - TN
+        - NG
         in: query
         name: transaction_type
+        required: true
         type: string
       produces:
       - application/json
@@ -434,19 +450,21 @@ paths:
       description: Find financial report by stock code, report period, and report
         year
       parameters:
-      - description: Stock code
-        in: query
-        name: stock_code
-        required: true
-        type: string
-      - description: Report period (TW1, TW2, TW3, Tahunan)
+      - enum:
+        - TW1
+        - TW2
+        - TW3
+        - Audit
         in: query
         name: report_period
         required: true
         type: string
-      - description: Report year (yyyy)
-        in: query
+      - in: query
         name: report_year
+        required: true
+        type: string
+      - in: query
+        name: stock_code
         required: true
         type: string
       produces:
@@ -475,8 +493,7 @@ paths:
     get:
       description: Find stock by stock code
       parameters:
-      - description: Stock code
-        in: query
+      - in: query
         name: stock_code
         required: true
         type: string
@@ -506,20 +523,16 @@ paths:
     get:
       description: Find stock summaries by stock code, start date, and end date
       parameters:
-      - description: Stock code
-        in: query
+      - in: query
+        name: endDate
+        required: true
+        type: string
+      - in: query
+        name: startDate
+        required: true
+        type: string
+      - in: query
         name: stock_code
-        required: true
-        type: string
-      - description: Start date (yyyy-mm-dd)
-        in: query
-        name: start_date
-        required: true
-        type: string
-      - description: End date (yyyy-mm-dd)
-        in: query
-        name: end_date
-        required: true
         type: string
       produces:
       - application/json

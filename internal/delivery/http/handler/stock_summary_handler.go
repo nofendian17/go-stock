@@ -30,9 +30,7 @@ func NewStockSummaryHandler(stockSummaryUseCase usecase.StockSummaryUseCase, val
 // @Description Find stock summaries by stock code, start date, and end date
 // @Tags Stock
 // @Produce json
-// @Param stock_code query string true "Stock code"
-// @Param start_date query string true "Start date (yyyy-mm-dd)"
-// @Param end_date query string true "End date (yyyy-mm-dd)"
+// @Param request query model.StockSummaryRequest true "query params"
 // @Success 200 {array} model.StockSummaryResponse
 // @Failure 400 {object} response.Error
 // @Failure 500 {object} response.Error

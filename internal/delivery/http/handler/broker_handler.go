@@ -31,7 +31,7 @@ func NewBrokerHandler(brokerUsecase usecase.BrokerUseCase, validate *validator.V
 // @Description Find brokers by code
 // @Tags Broker
 // @Produce json
-// @Param code query string false "Broker code"
+// @Param request query model.BrokerRequest true "query params"
 // @Success 200 {array} model.BrokerResponse
 // @Failure 400 {object} response.Error
 // @Failure 500 {object} response.Error

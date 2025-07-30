@@ -177,7 +177,7 @@ func (s *stockHandler) ListStock(w http.ResponseWriter, r *http.Request) {
 // @Description Find stock by stock code
 // @Tags Stock
 // @Produce json
-// @Param stock_code query string true "Stock code"
+// @Param request query model.StockRequest true "query params"
 // @Success 200 {object} model.StockResponse
 // @Failure 400 {object} response.Error
 // @Failure 404 {object} response.Error

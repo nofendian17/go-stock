@@ -9,7 +9,15 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "soberkoder@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -28,7 +36,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Broker code",
                         "name": "code",
                         "in": "query"
                     }
@@ -71,36 +78,44 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Stock code",
-                        "name": "stock_code",
+                        "name": "end_date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "ALL",
+                            "F",
+                            "F"
+                        ],
+                        "type": "string",
+                        "name": "investor_type",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "Start date (yyyy-mm-dd)",
                         "name": "start_date",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "End date (yyyy-mm-dd)",
-                        "name": "end_date",
+                        "name": "stock_code",
                         "in": "query",
                         "required": true
                     },
                     {
+                        "enum": [
+                            "ALL",
+                            "RG",
+                            "TN",
+                            "NG"
+                        ],
                         "type": "string",
-                        "description": "Investor type (all, domestic, foreign)",
-                        "name": "investor_type",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Transaction type (all, net, buy, sell)",
                         "name": "transaction_type",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -143,23 +158,26 @@ const docTemplate = `{
                 "summary": "Find financial report",
                 "parameters": [
                     {
+                        "enum": [
+                            "TW1",
+                            "TW2",
+                            "TW3",
+                            "Audit"
+                        ],
                         "type": "string",
-                        "description": "Stock code",
-                        "name": "stock_code",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Report period (TW1, TW2, TW3, Tahunan)",
                         "name": "report_period",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "Report year (yyyy)",
                         "name": "report_year",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "stock_code",
                         "in": "query",
                         "required": true
                     }
@@ -205,7 +223,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Stock code",
                         "name": "stock_code",
                         "in": "query",
                         "required": true
@@ -252,24 +269,20 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Stock code",
+                        "name": "endDate",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "startDate",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "name": "stock_code",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Start date (yyyy-mm-dd)",
-                        "name": "start_date",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "End date (yyyy-mm-dd)",
-                        "name": "end_date",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -884,12 +897,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost:8080",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Go Stock API",
+	Description:      "This is a simple API for stock data",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -32,11 +32,7 @@ func NewBrokerSummaryHandler(brokerSummaryUsecase usecase.BrokerSummaryUseCase, 
 // @Description Find broker summaries by stock code, start date, end date, investor type, and transaction type
 // @Tags Broker
 // @Produce json
-// @Param stock_code query string true "Stock code"
-// @Param start_date query string true "Start date (yyyy-mm-dd)"
-// @Param end_date query string true "End date (yyyy-mm-dd)"
-// @Param investor_type query string false "Investor type (all, domestic, foreign)"
-// @Param transaction_type query string false "Transaction type (all, net, buy, sell)"
+// @Param request query model.BrokerSummaryRequest true "query params"
 // @Success 200 {object} model.BrokerSummaryResponse
 // @Failure 400 {object} response.Error
 // @Failure 404 {object} response.Error
