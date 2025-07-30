@@ -1,0 +1,576 @@
+definitions:
+  model.Attachment:
+    properties:
+      file_id:
+        type: string
+      file_modified:
+        type: string
+      file_name:
+        type: string
+      file_path:
+        type: string
+      file_size:
+        type: integer
+      file_type:
+        type: string
+      report_period:
+        type: string
+      report_type:
+        type: string
+      report_year:
+        type: string
+      stock_code:
+        type: string
+      stock_name:
+        type: string
+    type: object
+  model.AuditCommittee:
+    properties:
+      name:
+        type: string
+      position:
+        type: string
+    type: object
+  model.BrokerResponse:
+    properties:
+      code:
+        type: string
+      license:
+        type: string
+      name:
+        type: string
+    type: object
+  model.BrokerSummaryData:
+    properties:
+      avg:
+        type: number
+      broker_code:
+        type: string
+      lot:
+        type: number
+      val:
+        type: string
+    type: object
+  model.BrokerSummaryResponse:
+    properties:
+      buyers:
+        items:
+          $ref: '#/definitions/model.BrokerSummaryData'
+        type: array
+      end_date:
+        type: string
+      sellers:
+        items:
+          $ref: '#/definitions/model.BrokerSummaryData'
+        type: array
+      start_date:
+        type: string
+      stock_code:
+        type: string
+      summary:
+        $ref: '#/definitions/model.Summary'
+    type: object
+  model.Commissioner:
+    properties:
+      is_independent:
+        type: boolean
+      name:
+        type: string
+      position:
+        type: string
+    type: object
+  model.Director:
+    properties:
+      is_affiliated:
+        type: boolean
+      name:
+        type: string
+      position:
+        type: string
+    type: object
+  model.Dividend:
+    properties:
+      cash_dividend_currency:
+        type: string
+      cash_dividend_per_share:
+        type: number
+      cash_dividend_per_share_currency:
+        type: string
+      cash_dividend_total:
+        type: number
+      cum_date:
+        type: string
+      ex_date:
+        type: string
+      name:
+        type: string
+      payment_date:
+        type: string
+      ratio_1:
+        type: integer
+      ratio_2:
+        type: integer
+      record_date:
+        type: string
+      total_stock_bonus:
+        type: number
+      type:
+        type: string
+      year:
+        type: string
+    type: object
+  model.FinancialReportResponse:
+    properties:
+      attachment:
+        items:
+          $ref: '#/definitions/model.Attachment'
+        type: array
+      file_modified:
+        type: string
+      report_period:
+        type: string
+      report_year:
+        type: string
+      stock_code:
+        type: string
+      stock_name:
+        type: string
+    type: object
+  model.Profile:
+    properties:
+      address:
+        type: string
+      bae:
+        type: string
+      email:
+        type: string
+      fax:
+        type: string
+      industry:
+        type: string
+      listing_date:
+        type: string
+      logo:
+        type: string
+      main_business:
+        type: string
+      phone:
+        type: string
+      sector:
+        type: string
+      status:
+        type: integer
+      stock_code:
+        type: string
+      stock_name:
+        type: string
+      sub_industry:
+        type: string
+      sub_sector:
+        type: string
+      tin:
+        type: string
+      website:
+        type: string
+    type: object
+  model.Secretary:
+    properties:
+      email:
+        type: string
+      fax:
+        type: string
+      mobile_number:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+      website:
+        type: string
+    type: object
+  model.Shareholder:
+    properties:
+      category:
+        type: string
+      is_controller:
+        type: boolean
+      name:
+        type: string
+      percentage:
+        type: number
+      share:
+        type: number
+    type: object
+  model.StockResponse:
+    properties:
+      audit_committees:
+        items:
+          $ref: '#/definitions/model.AuditCommittee'
+        type: array
+      board:
+        type: string
+      code:
+        type: string
+      commissioners:
+        items:
+          $ref: '#/definitions/model.Commissioner'
+        type: array
+      directors:
+        items:
+          $ref: '#/definitions/model.Director'
+        type: array
+      dividends:
+        items:
+          $ref: '#/definitions/model.Dividend'
+        type: array
+      listing_date:
+        type: string
+      name:
+        type: string
+      profiles:
+        items:
+          $ref: '#/definitions/model.Profile'
+        type: array
+      secretaries:
+        items:
+          $ref: '#/definitions/model.Secretary'
+        type: array
+      share:
+        type: number
+      shareholders:
+        items:
+          $ref: '#/definitions/model.Shareholder'
+        type: array
+      subsidiaries:
+        items:
+          $ref: '#/definitions/model.Subsidiary'
+        type: array
+    type: object
+  model.StockSummaryResponse:
+    properties:
+      bid:
+        type: number
+      bid_volume:
+        type: number
+      change:
+        type: number
+      close:
+        type: number
+      date:
+        type: string
+      delisting_date:
+        type: string
+      first_trade:
+        type: number
+      foreign_buy:
+        type: number
+      foreign_sell:
+        type: number
+      frequency:
+        type: number
+      high:
+        type: number
+      id_stock_summary:
+        type: integer
+      index_individual:
+        type: number
+      listed_shares:
+        type: number
+      low:
+        type: number
+      non_regular_frequency:
+        type: number
+      non_regular_value:
+        type: number
+      non_regular_volume:
+        type: number
+      offer:
+        type: number
+      offer_volume:
+        type: number
+      open_price:
+        type: number
+      percentage: {}
+      persen: {}
+      previous:
+        type: number
+      remarks:
+        type: string
+      stock_code:
+        type: string
+      stock_name:
+        type: string
+      tradeble_shares:
+        type: number
+      value:
+        type: number
+      volume:
+        type: number
+      weight_for_index:
+        type: number
+    type: object
+  model.Subsidiary:
+    properties:
+      business_fields:
+        type: string
+      commercial_year:
+        type: string
+      currency:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+      operation_status:
+        type: string
+      percentage:
+        type: number
+      total_asset:
+        type: number
+      units:
+        type: string
+    type: object
+  model.Summary:
+    properties:
+      avg:
+        type: number
+      foreign_net_val:
+        type: string
+      total_lot:
+        type: number
+      total_val:
+        type: string
+    type: object
+  response.Error:
+    properties:
+      field:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/brokers:
+    get:
+      description: Find brokers by code
+      parameters:
+      - description: Broker code
+        in: query
+        name: code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.BrokerResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Find brokers
+      tags:
+      - Broker
+  /api/v1/brokers/summaries:
+    get:
+      description: Find broker summaries by stock code, start date, end date, investor
+        type, and transaction type
+      parameters:
+      - description: Stock code
+        in: query
+        name: stock_code
+        required: true
+        type: string
+      - description: Start date (yyyy-mm-dd)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End date (yyyy-mm-dd)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      - description: Investor type (all, domestic, foreign)
+        in: query
+        name: investor_type
+        type: string
+      - description: Transaction type (all, net, buy, sell)
+        in: query
+        name: transaction_type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BrokerSummaryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Find broker summaries
+      tags:
+      - Broker
+  /api/v1/financial_report:
+    get:
+      description: Find financial report by stock code, report period, and report
+        year
+      parameters:
+      - description: Stock code
+        in: query
+        name: stock_code
+        required: true
+        type: string
+      - description: Report period (TW1, TW2, TW3, Tahunan)
+        in: query
+        name: report_period
+        required: true
+        type: string
+      - description: Report year (yyyy)
+        in: query
+        name: report_year
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FinancialReportResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Find financial report
+      tags:
+      - FinancialReport
+  /api/v1/stock:
+    get:
+      description: Find stock by stock code
+      parameters:
+      - description: Stock code
+        in: query
+        name: stock_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Find stock by stock code
+      tags:
+      - Stock
+  /api/v1/stock/summaries:
+    get:
+      description: Find stock summaries by stock code, start date, and end date
+      parameters:
+      - description: Stock code
+        in: query
+        name: stock_code
+        required: true
+        type: string
+      - description: Start date (yyyy-mm-dd)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End date (yyyy-mm-dd)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.StockSummaryResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Find stock summaries
+      tags:
+      - Stock
+  /api/v1/stocks:
+    get:
+      description: List all stocks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.StockResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: List all stocks
+      tags:
+      - Stock
+  /healthz:
+    get:
+      description: Health check
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Health check
+      tags:
+      - Health
+swagger: "2.0"

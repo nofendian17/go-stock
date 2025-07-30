@@ -25,6 +25,19 @@ func NewFinancialReportHandler(financialReportUseCase usecase.FinancialReportUse
 	}
 }
 
+// FindFinancialReport find financial report
+// @Summary Find financial report
+// @Description Find financial report by stock code, report period, and report year
+// @Tags FinancialReport
+// @Produce json
+// @Param stock_code query string true "Stock code"
+// @Param report_period query string true "Report period (TW1, TW2, TW3, Tahunan)"
+// @Param report_year query string true "Report year (yyyy)"
+// @Success 200 {object} model.FinancialReportResponse
+// @Failure 400 {object} response.Error
+// @Failure 404 {object} response.Error
+// @Failure 500 {object} response.Error
+// @Router /api/v1/financial_report [get]
 func (h *financialReportHandler) FindFinancialReport(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	stockCode := r.URL.Query().Get("stock_code")

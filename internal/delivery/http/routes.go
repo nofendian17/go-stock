@@ -3,6 +3,8 @@ package http
 import (
 	"go-stock/internal/app"
 	"net/http"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func RegisterRoutes(route *http.ServeMux, handler app.Handler) {
@@ -15,4 +17,7 @@ func RegisterRoutes(route *http.ServeMux, handler app.Handler) {
 	route.HandleFunc("/api/v1/brokers", handler.BrokerHandler.Find)
 	route.HandleFunc("/api/v1/brokers/summaries", handler.BrokerSummaryHandler.Find)
 	route.HandleFunc("/api/v1/financial_report", handler.FinancialReportHandler.FindFinancialReport)
+
+	// Swagger
+	route.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 }

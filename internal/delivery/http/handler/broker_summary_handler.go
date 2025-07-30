@@ -27,6 +27,21 @@ func NewBrokerSummaryHandler(brokerSummaryUsecase usecase.BrokerSummaryUseCase, 
 	}
 }
 
+// Find broker summaries
+// @Summary Find broker summaries
+// @Description Find broker summaries by stock code, start date, end date, investor type, and transaction type
+// @Tags Broker
+// @Produce json
+// @Param stock_code query string true "Stock code"
+// @Param start_date query string true "Start date (yyyy-mm-dd)"
+// @Param end_date query string true "End date (yyyy-mm-dd)"
+// @Param investor_type query string false "Investor type (all, domestic, foreign)"
+// @Param transaction_type query string false "Transaction type (all, net, buy, sell)"
+// @Success 200 {object} model.BrokerSummaryResponse
+// @Failure 400 {object} response.Error
+// @Failure 404 {object} response.Error
+// @Failure 500 {object} response.Error
+// @Router /api/v1/brokers/summaries [get]
 func (h *brokerSummaryHandler) Find(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	stockCode := r.URL.Query().Get("stock_code")

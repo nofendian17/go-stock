@@ -25,6 +25,18 @@ func NewStockSummaryHandler(stockSummaryUseCase usecase.StockSummaryUseCase, val
 	}
 }
 
+// FindStockSummaries find stock summaries
+// @Summary Find stock summaries
+// @Description Find stock summaries by stock code, start date, and end date
+// @Tags Stock
+// @Produce json
+// @Param stock_code query string true "Stock code"
+// @Param start_date query string true "Start date (yyyy-mm-dd)"
+// @Param end_date query string true "End date (yyyy-mm-dd)"
+// @Success 200 {array} model.StockSummaryResponse
+// @Failure 400 {object} response.Error
+// @Failure 500 {object} response.Error
+// @Router /api/v1/stock/summaries [get]
 func (s *stockSummaryHandler) FindStockSummaries(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	stockCode := r.URL.Query().Get("stock_code")
