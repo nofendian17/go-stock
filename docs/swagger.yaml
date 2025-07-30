@@ -401,7 +401,7 @@ paths:
       - enum:
         - ALL
         - F
-        - F
+        - D
         in: query
         name: investor_type
         required: true
