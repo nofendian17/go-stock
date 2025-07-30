@@ -86,7 +86,7 @@ const docTemplate = `{
                         "enum": [
                             "ALL",
                             "F",
-                            "F"
+                            "D"
                         ],
                         "type": "string",
                         "name": "investor_type",
