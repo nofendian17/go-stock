@@ -47,7 +47,7 @@ go run main.go
 ```
 
 ## API Endpoints
-Base URL: `http://localhost:8080/`
+Base URL: `http://localhost:3000/`
 
 ### Stocks
 - **`GET /api/v1/stocks`**
@@ -75,7 +75,7 @@ Base URL: `http://localhost:8080/`
 ### Healthcheck
 - `GET /healthz` - System health status
 
-For a more detailed API specification, please see the [Swagger documentation](http://localhost:8080/swagger/index.html).
+For a more detailed API specification, please see the [Swagger documentation](http://localhost:3000/swagger/index.html).
 
 ## Scheduled Tasks
 - **Stock Data Synchronization**: Runs from config in `cron_job` to refresh stock data from IDX API.
