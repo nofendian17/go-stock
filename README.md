@@ -26,6 +26,7 @@ A stock data management system built with Go, providing RESTful APIs for stock i
 - Docker
 - MongoDB instance (local or cloud)
 - Go 1.20+ installed
+- Node js 23+
 
 ### Quick Start (Docker)
 ```bash
@@ -36,6 +37,8 @@ docker-compose up -d --build
 ### Manual Setup
 1. Clone repository
 2. Copy `example.config.yaml` to `config.yaml`
+3. Copy `cp web/.env.example` to  `.env`
+3. Run `npm install && npm run build`
 3. Update MongoDB connection settings
 4. Install dependencies
 ```bash
