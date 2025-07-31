@@ -1,0 +1,45 @@
+export function DateRangePicker({
+  startDate,
+  endDate,
+  onChange,
+  onRefresh
+}: {
+  startDate: string;
+  endDate: string;
+  onChange: (range: { startDate: string; endDate: string }) => void;
+  onRefresh: () => void;
+}) {
+  return (
+    <div className="flex flex-col sm:flex-row items-center gap-2">
+      <div className="flex items-center gap-2">
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => onChange({ 
+            startDate: e.target.value, 
+            endDate 
+          })}
+          className="border rounded px-3 py-1 text-sm w-full"
+          max={endDate}
+        />
+        <span className="text-gray-500">to</span>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => onChange({ 
+            startDate, 
+            endDate: e.target.value 
+          })}
+          className="border rounded px-3 py-1 text-sm w-full"
+          min={startDate}
+        />
+      </div>
+      <button
+        onClick={onRefresh}
+        className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm whitespace-nowrap"
+      >
+        Refresh Data
+      </button>
+    </div>
+  );
+}

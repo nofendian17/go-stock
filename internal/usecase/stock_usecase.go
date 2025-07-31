@@ -14,6 +14,8 @@ type StockUseCase interface {
 	UpdateStock(ctx context.Context) error
 	ListStocks(ctx context.Context) ([]entity.Stock, error)
 	FindStock(ctx context.Context, code string) (*entity.Stock, error)
+	ListStocksWithPagination(ctx context.Context, limit, offset int64) ([]entity.Stock, int64, error)
+	SearchStocks(ctx context.Context, query string) ([]entity.Stock, error)
 }
 type stockUseCase struct {
 	stockRepository repository.StockRepository
@@ -184,4 +186,12 @@ func (s *stockUseCase) ListStocks(ctx context.Context) ([]entity.Stock, error) {
 
 func (s *stockUseCase) FindStock(ctx context.Context, code string) (*entity.Stock, error) {
 	return s.stockRepository.FindOne(ctx, code)
+}
+
+func (s *stockUseCase) ListStocksWithPagination(ctx context.Context, limit, offset int64) ([]entity.Stock, int64, error) {
+	return s.stockRepository.FindWithPagination(ctx, limit, offset)
+}
+
+func (s *stockUseCase) SearchStocks(ctx context.Context, query string) ([]entity.Stock, error) {
+	return s.stockRepository.Search(ctx, query)
 }

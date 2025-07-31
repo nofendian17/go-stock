@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"go-stock/internal/app"
 	"go-stock/internal/config"
 	"go-stock/internal/delivery/cron"
@@ -11,6 +12,9 @@ import (
 	"os/signal"
 	"syscall"
 )
+
+//go:embed web/dist/*
+var view embed.FS
 
 // @title Go Stock API
 // @version 1.0
@@ -30,7 +34,7 @@ func main() {
 	}
 
 	// Initialize the application
-	bootstrap, err := app.NewBootstrap(cfg)
+	bootstrap, err := app.NewBootstrap(cfg, view)
 	if err != nil {
 		log.Fatalf("Failed to initialize app: %v", err)
 	}

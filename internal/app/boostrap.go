@@ -1,6 +1,7 @@
 package app
 
 import (
+	"embed"
 	"fmt"
 	"github.com/go-playground/validator/v10"
 	"go-stock/internal/config"
@@ -10,6 +11,7 @@ import (
 	"go-stock/internal/infrastructure/mongo"
 	"go-stock/internal/repository"
 	"go-stock/internal/usecase"
+	"go-stock/internal/view"
 	"net/http"
 	"time"
 )
@@ -20,6 +22,7 @@ type Bootstrap interface {
 	GetRepository() Repository
 	GetUsecase() Usecase
 	GetHandler() Handler
+	GetView() View
 }
 
 type Infrastructure struct {
@@ -52,12 +55,17 @@ type Handler struct {
 	FinancialReportHandler handler.FinancialReportHandler
 }
 
+type View struct {
+	ViewService view.Service
+}
+
 type bootstrap struct {
 	cfg            config.Config
 	infrastructure Infrastructure
 	repository     Repository
 	usecase        Usecase
 	handler        Handler
+	view           View
 }
 
 func (b *bootstrap) GetConfig() config.Config {
@@ -80,7 +88,11 @@ func (b *bootstrap) GetHandler() Handler {
 	return b.handler
 }
 
-func NewBootstrap(cfg config.Config) (Bootstrap, error) {
+func (b *bootstrap) GetView() View {
+	return b.view
+}
+
+func NewBootstrap(cfg config.Config, v embed.FS) (Bootstrap, error) {
 	mongoConfig := mongo.Config{
 		Dsn: cfg.GetMongo().DSN,
 	}
@@ -134,6 +146,7 @@ func NewBootstrap(cfg config.Config) (Bootstrap, error) {
 	brokerSummaryHandler := handler.NewBrokerSummaryHandler(brokerSummaryUsecase, validate)
 	financialReportHandler := handler.NewFinancialReportHandler(financialReportUsecase, validate)
 
+	viewService := view.New(v)
 	return &bootstrap{
 		cfg: cfg,
 		infrastructure: Infrastructure{
@@ -161,6 +174,9 @@ func NewBootstrap(cfg config.Config) (Bootstrap, error) {
 			BrokerHandler:          brokerHandler,
 			BrokerSummaryHandler:   brokerSummaryHandler,
 			FinancialReportHandler: financialReportHandler,
+		},
+		view: View{
+			ViewService: viewService,
 		},
 	}, nil
 }
