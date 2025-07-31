@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
+	"time"
 )
 
 type stockRepository struct {
@@ -80,6 +81,33 @@ func (r *stockRepository) All(ctx context.Context) ([]entity.Stock, error) {
 	}
 
 	return stocks, nil
+}
+
+func (r *stockRepository) FindHistorical(ctx context.Context, stockCode string, startDate, endDate time.Time) ([]entity.StockSummary, error) {
+	collection := r.mongoClient.GetClient().
+		Database(r.cfg.GetMongo().Database).
+		Collection("stock_summaries")
+
+	filter := bson.M{
+		"stock_code": stockCode,
+		"date": bson.M{
+			"$gte": startDate,
+			"$lte": endDate,
+		},
+	}
+
+	cursor, err := collection.Find(ctx, filter, options.Find().SetSort(bson.D{{Key: "date", Value: 1}}))
+	if err != nil {
+		return nil, fmt.Errorf("failed to find historical data: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var summaries []entity.StockSummary
+	if err := cursor.All(ctx, &summaries); err != nil {
+		return nil, fmt.Errorf("failed to decode historical data: %w", err)
+	}
+
+	return summaries, nil
 }
 
 func (r *stockRepository) FindOne(ctx context.Context, code string) (*entity.Stock, error) {

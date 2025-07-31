@@ -8,12 +8,14 @@ import (
 	"go-stock/internal/infrastructure/idx"
 	"go-stock/internal/repository"
 	"go-stock/internal/shared/helper"
+	"time"
 )
 
 type StockUseCase interface {
 	UpdateStock(ctx context.Context) error
 	ListStocks(ctx context.Context) ([]entity.Stock, error)
 	FindStock(ctx context.Context, code string) (*entity.Stock, error)
+	FindHistorical(ctx context.Context, stockCode string, startDate, endDate time.Time) ([]entity.StockSummary, error)
 }
 type stockUseCase struct {
 	stockRepository repository.StockRepository
@@ -184,4 +186,8 @@ func (s *stockUseCase) ListStocks(ctx context.Context) ([]entity.Stock, error) {
 
 func (s *stockUseCase) FindStock(ctx context.Context, code string) (*entity.Stock, error) {
 	return s.stockRepository.FindOne(ctx, code)
+}
+
+func (s *stockUseCase) FindHistorical(ctx context.Context, stockCode string, startDate, endDate time.Time) ([]entity.StockSummary, error) {
+	return s.stockRepository.FindHistorical(ctx, stockCode, startDate, endDate)
 }

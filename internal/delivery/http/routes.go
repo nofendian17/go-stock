@@ -14,6 +14,7 @@ func RegisterRoutes(route *http.ServeMux, handler app.Handler) {
 	route.HandleFunc("/healthz", handler.HealthHandler.Healthz)
 	route.HandleFunc("/api/v1/stocks", handler.StockHandler.ListStock)
 	route.HandleFunc("/api/v1/stock", handler.StockHandler.FindStock)
+	route.HandleFunc("/api/v1/stock/historical", handler.StockHandler.FindHistoricalStock)
 	route.HandleFunc("/api/v1/stock/summaries", handler.StockSummaryHandler.FindStockSummaries)
 	route.HandleFunc("/api/v1/brokers", handler.BrokerHandler.Find)
 	route.HandleFunc("/api/v1/brokers/summaries", handler.BrokerSummaryHandler.Find)

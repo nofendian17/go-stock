@@ -8,11 +8,13 @@ import (
 	"go-stock/internal/usecase"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type StockHandler interface {
 	ListStock(w http.ResponseWriter, r *http.Request)
 	FindStock(w http.ResponseWriter, r *http.Request)
+	FindHistoricalStock(w http.ResponseWriter, r *http.Request)
 }
 type stockHandler struct {
 	stockUsecase usecase.StockUseCase
@@ -170,6 +172,39 @@ func (s *stockHandler) ListStock(w http.ResponseWriter, r *http.Request) {
 
 	response.Success(w, data, "")
 	return
+}
+
+func (s *stockHandler) FindHistoricalStock(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	stockCode := r.URL.Query().Get("stock_code")
+	if stockCode == "" {
+		response.BadRequest(w, "stock_code is required", nil)
+		return
+	}
+
+	startDateStr := r.URL.Query().Get("start_date")
+	endDateStr := r.URL.Query().Get("end_date")
+
+	layout := "2006-01-02"
+	startDate, err := time.Parse(layout, startDateStr)
+	if err != nil {
+		response.BadRequest(w, "Invalid start_date format. Use YYYY-MM-DD", nil)
+		return
+	}
+
+	endDate, err := time.Parse(layout, endDateStr)
+	if err != nil {
+		response.BadRequest(w, "Invalid end_date format. Use YYYY-MM-DD", nil)
+		return
+	}
+
+	summaries, err := s.stockUsecase.FindHistorical(r.Context(), strings.ToUpper(stockCode), startDate, endDate)
+	if err != nil {
+		response.InternalError(w, err.Error())
+		return
+	}
+
+	response.Success(w, summaries, "")
 }
 
 // FindStock find stock by stock code
