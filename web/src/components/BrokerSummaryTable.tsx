@@ -1,5 +1,5 @@
 import React from 'react';
-import type { BrokerSummaryResponse, BrokerSummaryData } from '../types/stock';
+import type { BrokerSummaryResponse } from '../types/stock';
 
 interface BrokerSummaryTableProps {
     data: BrokerSummaryResponse;
