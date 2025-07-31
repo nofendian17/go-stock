@@ -12,7 +12,7 @@ import (
 
 func Start(ctx context.Context, bootstrap app.Bootstrap) {
 	router := http.NewServeMux()
-	RegisterRoutes(router, bootstrap.GetHandler())
+	RegisterRoutes(router, bootstrap)
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%d", bootstrap.GetConfig().GetApplication().Host, bootstrap.GetConfig().GetApplication().Port),

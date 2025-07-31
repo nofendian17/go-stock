@@ -7,6 +7,7 @@ import (
 	"go-stock/internal/config"
 	"go-stock/internal/entity"
 	"go-stock/internal/repository"
+
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
@@ -97,4 +98,67 @@ func (r *stockRepository) FindOne(ctx context.Context, code string) (*entity.Sto
 		return nil, fmt.Errorf("failed to find stock by code: %w", err)
 	}
 	return &stock, nil
+}
+
+func (r *stockRepository) FindWithPagination(ctx context.Context, limit, offset int64) ([]entity.Stock, int64, error) {
+	collection := r.mongoClient.GetClient().
+		Database(r.cfg.GetMongo().Database).
+		Collection(r.collection)
+
+	// Get total count
+	total, err := collection.CountDocuments(ctx, bson.D{})
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to count stocks: %w", err)
+	}
+
+	// Get paginated results
+	cursor, err := collection.Find(
+		ctx,
+		bson.D{},
+		options.Find().
+			SetSort(bson.D{{Key: "stock_code", Value: 1}}).
+			SetLimit(limit).
+			SetSkip(offset),
+	)
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to find stocks: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var stocks []entity.Stock
+	if err := cursor.All(ctx, &stocks); err != nil {
+		return nil, 0, fmt.Errorf("failed to decode stocks: %w", err)
+	}
+
+	return stocks, total, nil
+}
+
+func (r *stockRepository) Search(ctx context.Context, query string) ([]entity.Stock, error) {
+	collection := r.mongoClient.GetClient().
+		Database(r.cfg.GetMongo().Database).
+		Collection(r.collection)
+
+	filter := bson.M{
+		"$or": []bson.M{
+			{"stock_code": bson.M{"$regex": query, "$options": "i"}},
+			{"name": bson.M{"$regex": query, "$options": "i"}},
+		},
+	}
+
+	cursor, err := collection.Find(
+		ctx,
+		filter,
+		options.Find().SetSort(bson.D{{Key: "stock_code", Value: 1}}),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find stocks by query: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var stocks []entity.Stock
+	if err := cursor.All(ctx, &stocks); err != nil {
+		return nil, fmt.Errorf("failed to decode stocks: %w", err)
+	}
+
+	return stocks, nil
 }
